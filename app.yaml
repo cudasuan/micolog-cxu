@@ -1,0 +1,40 @@
+application: xclricky
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+
+- url: /favicon\.ico
+  static_files: static/images/favicon.ico
+  upload: static/images/favicon.ico
+
+- url: /tinymce/.*
+  script: $PYTHON_LIB/google/appengine/ext/zipserve
+
+- url: /static
+  static_dir: static
+
+- url: /rpc|/rpc
+  script: api_rpc.py
+
+- url: /themes/.*
+  script: theme_files.py
+
+- url: /myadmin/.*|/myadmin
+  script: $PYTHON_LIB/google/appengine/ext/admin
+  login: admin
+
+- url: /admin/.*
+  script: admin.py
+
+- url: /admin
+  script: admin.py
+
+- url: /googlecece43e28234575d.html
+  static_files: static/googlecece43e28234575d.html
+  upload: static/googlecece43e28234575d.html
+
+- url: /.*
+  script: blog.py
+

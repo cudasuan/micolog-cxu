@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %} {{entry.title}} - {{blog.title}} {% endblock %}
+{% block content%}
+
+<div class="ctop"></div>
+<div class="box">
+
+{% if entry %}
+
+<div id="post-{{entry.key}}">
+<div class="nifty"><h2><a href="/{{ entry.link }}" rel="bookmark" title="Permanent Link to {{entry.title}}">{{entry.title}}</a> <span class="date">{{entry.date|datetz:"F jS, Y"}}</span></h2></div>
+
+{{ entry.content }}
+
+	{%if relateposts%}
+                <h4>Relate Posts:</h4>
+                  <ul>
+                {%for post in relateposts%}
+                  <li><a href="/{{post.link}}">{{post.title}}</a></li>
+                {%endfor%}
+                </ul>
+                {%endif%}
+
+<div class="meta">{% if entry.strtags %}Tags: {%for tag in entry.tags%}<a href="/tag/{{tag|urlencode}}">{{tag}}</a> {%endfor%}<br><br>{%endif%}  Posted in {%for cate in entry.categories%} <a href="/category/{{cate.slug}}">{{cate.name}}</a> {%endfor%} | {%if self.is_admin%}<a href="{{entry.edit_url}}">Edit</a>  {%endif%}  </div>
+
+</div>
+</div>
+<div class="cbottom"></div>
+<div class="space">
+    <script type="text/javascript"><!--
+        google_ad_client = "pub-6264104615357223";
+        google_ad_slot = "4784927840";
+        google_ad_width = 468;
+        google_ad_height = 60;
+        //-->
+    </script>
+    <script type="text/javascript"
+        src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+    </script>
+</div>
+
+
+<div class="ctop"></div>
+<div class="box">
+{% include "comments.html" %}
+</div>
+<div class="cbottom"></div>
+<div class="space"></div>
+
+{%endif%}
+</div>
+{% include "sidebar.html" %}
+{% endblock %}
