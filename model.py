@@ -10,6 +10,9 @@ from google.appengine.api import urlfetch
 from datetime import datetime
 import urllib, hashlib,urlparse
 
+import re
+url_regex = re.compile('href="(http.*)"')
+
 logging.info('module base reloaded')
 
 rootpath=os.path.dirname(__file__)
@@ -383,6 +386,18 @@ class Entry(BaseModel):
 
             g_blog.save()
             self.save()
+
+            urls = url_regex.findall(self.content)
+            print urls
+            if len(urls) > 0:
+                urls = set(urls)
+                from app.trackback import TrackBack
+                tb = TrackBack(title=self.title, excerpt=self.get_content_excerpt()[:250], url=g_blog.baseurl + self.link, blog_name=g_blog.title)
+                for url in urls:
+                    resp = tb.ping(url)
+                    if resp:
+                        logging.debug(resp)
+
         else:
             self.published=false
             if self.published:
