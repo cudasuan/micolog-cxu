@@ -11,7 +11,7 @@ from datetime import datetime
 import urllib, hashlib,urlparse
 
 import re
-url_regex = re.compile('href="(http.*)"')
+url_regex = re.compile('href="(http[^"]+)"')
 
 logging.info('module base reloaded')
 
@@ -388,7 +388,7 @@ class Entry(BaseModel):
             self.save()
 
             urls = url_regex.findall(self.content)
-            print urls
+            logging.info(urls)
             if len(urls) > 0:
                 urls = set(urls)
                 from app.trackback import TrackBack
@@ -396,7 +396,7 @@ class Entry(BaseModel):
                 for url in urls:
                     resp = tb.ping(url)
                     if resp:
-                        logging.debug(resp)
+                        logging.info(resp)
 
         else:
             self.published=false
