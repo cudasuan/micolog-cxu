@@ -392,7 +392,7 @@ class Entry(BaseModel):
             if len(urls) > 0:
                 urls = set(urls)
                 from app.trackback import TrackBack
-                tb = TrackBack(title=self.title, excerpt=self.get_content_excerpt()[:250], url=g_blog.baseurl + self.link, blog_name=g_blog.title)
+                tb = TrackBack(title=self.title, excerpt=self.get_content_excerpt()[:250], url=self.fullurl(), blog_name=g_blog.title)
                 for url in urls:
                     resp = tb.ping(url)
                     if resp:
