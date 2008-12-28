@@ -315,7 +315,7 @@ class Entry(BaseModel):
 
     @property
     def edit_url(self):
-        return '/admin/%s?key=%s&action=edit'%(self.entrytype,self.key())
+        return '/admin/%s?key=%s&amp;action=edit'%(self.entrytype,self.key())
 
     def comments(self):
         return Comment.all().filter('entry =',self).order('date')
@@ -381,22 +381,26 @@ class Entry(BaseModel):
 
 
             if not self.published:
-                 g_blog.entrycount+=1
+                g_blog.entrycount+=1
+                to_ping = 1
+            else:
+                to_ping = 0
             self.published=True
 
             g_blog.save()
             self.save()
 
-            urls = url_regex.findall(self.content)
-            logging.info(urls)
-            if len(urls) > 0:
-                urls = set(urls)
-                from app.trackback import TrackBack
-                tb = TrackBack(title=self.title, excerpt=self.get_content_excerpt()[:250], url=self.fullurl(), blog_name=g_blog.title)
-                for url in urls:
-                    resp = tb.ping(url)
-                    if resp:
-                        logging.info(resp)
+            if not to_ping:
+                urls = url_regex.findall(self.content)
+                logging.info(urls)
+                if len(urls) > 0:
+                    urls = set(urls)
+                    from app.trackback import TrackBack
+                    tb = TrackBack(title=self.title, excerpt=self.get_content_excerpt()[:250], url=self.fullurl(), blog_name=g_blog.title)
+                    for url in urls:
+                        resp = tb.ping(url)
+                        if resp:
+                            logging.info(resp)
 
         else:
             self.published=false

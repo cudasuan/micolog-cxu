@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 {% block title %} {{entry.title}} - {{blog.title}} {% endblock %}
 {% block content%}
+<div id="split">
+
+<!-- <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+              xmlns:dc="http://purl.org/dc/elements/1.1/"
+              xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+     <rdf:Description rdf:about="{{blog.baseurl}}/{{entry.link}}"
+          dc:identifier="{{blog.baseurl}}/{{entry.link}}"
+          dc:title="{{entry.title}}"
+          trackback:ping="{{blog.baseurl}}/trackback/{{entry.link}}" />
+</rdf:RDF> -->
 
 <div class="ctop"></div>
 <div class="box">
@@ -21,7 +31,7 @@
                 </ul>
                 {%endif%}
 
-<div class="meta">{% if entry.strtags %}Tags: {%for tag in entry.tags%}<a href="/tag/{{tag|urlencode}}">{{tag}}</a> {%endfor%}<br><br>{%endif%}  Posted in {%for cate in entry.categories%} <a href="/category/{{cate.slug}}">{{cate.name}}</a> {%endfor%} | {%if self.is_admin%}<a href="{{entry.edit_url}}">Edit</a>  {%endif%}  </div>
+<div class="meta">{% if entry.strtags %}Tags: {%for tag in entry.tags%}<a href="/tag/{{tag|urlencode}}">{{tag}}</a> {%endfor%}<br/><br/>{%endif%}  Posted in {%for cate in entry.categories%} <a href="/category/{{cate.slug}}">{{cate.name}}</a> {%endfor%} | {%if self.is_admin%}<a href="{{entry.edit_url}}">Edit</a>  {%endif%}  </div>
 
 </div>
 </div>

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content%}
+<div id="split">
 {% if entries %}
 
 {% for entry in entries %}
@@ -15,7 +16,7 @@
 {{entry.content_excerpt}}
 
 
-<div class="meta">{% if entry.strtags %}Tags: {%for tag in entry.tags%}<a href="/tag/{{tag|urlencode}}">{{tag}}</a> {%endfor%}<br><br>{%endif%}  Posted in {%for cate in entry.categories%} <a href="/category/{{cate.slug}}">{{cate.name}}</a> {%endfor%} | {%if self.is_admin%}<a href="{{entry.edit_url}}">Edit</a> | {%endif%}  <a href="/{{entry.link}}#comments">Comments({{entry.commentcount}})&#187;</a></div>
+<div class="meta">{% if entry.strtags %}Tags: {%for tag in entry.tags%}<a href="/tag/{{tag|urlencode}}">{{tag}}</a> {%endfor%}<br/><br/>{%endif%}  Posted in {%for cate in entry.categories%} <a href="/category/{{cate.slug}}">{{cate.name}}</a> {%endfor%} | {%if self.is_admin%}<a href="{{entry.edit_url}}">Edit</a> | {%endif%}  <a href="/{{entry.link}}#comments">Comments({{entry.commentcount}})&#187;</a></div>
 </div>
 
 </div>
@@ -27,7 +28,8 @@
 <div class="box">
 <div class="alignleft">{% if show_next %}<a href="/page/{{ pageindex|add:"1" }}">&laquo; Older Entries</a>{%endif%}</div>
 <div class="alignright">{% if show_prev %}<a href="/page/{{ pageindex|add:"-1" }}">&laquo; Newer Entries</a>{%endif%}</div>
-<div class="clear"></div></div>
+</div>
+<div class="clear"></div>
 <div class="cbottom"></div>
 <div class="space"></div>
 
