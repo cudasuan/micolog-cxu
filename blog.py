@@ -437,7 +437,7 @@ class TrackBackHandler(webapp.RequestHandler):
         try:
             result = urlfetch.fetch(coming_url)
             if result.status_code != 200 or ((g_blog.baseurl + '/' + slug) 
-                    not in result.content):
+                    not in result.content.decode('ascii','ignore')):
                 self.response.out.write(self.error % "probably spam")
                 return
         except Exception, e:
