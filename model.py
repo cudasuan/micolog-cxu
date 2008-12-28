@@ -390,7 +390,7 @@ class Entry(BaseModel):
             g_blog.save()
             self.save()
 
-            if not to_ping:
+            if to_ping:
                 urls = url_regex.findall(self.content)
                 logging.info(urls)
                 if len(urls) > 0:
