@@ -12,6 +12,13 @@
 	}
 
 </style>
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    $("#title").blur(function(){
+        $("#slug").val( $("#title").val().toLowerCase().replace(/[^\s\w]/g, '').replace(/\s+/g, '-') );
+    });
+});
+</script>
 
 
 {% endblock %}
@@ -93,11 +100,7 @@ src="/static/js/tiny_mce_config.js"></script>
 <div id="titlediv">
 <h3>{%trans "Title" %}</h3>
 <div id="titlewrap">
-	<input type="text" autocomplete="off" id="title" value="{{entry.title}}" tabindex="1" size="60" name="post_title"/>
-</div>
-<div class="inside">
-	<div id="edit-slug-box">
-	</div>
+	<input type="text" id="title" value="{{entry.title}}" tabindex="1" size="60" name="post_title"/>
 </div>
 </div>
 
@@ -155,7 +158,7 @@ src="/static/js/tiny_mce_config.js"></script>
 <div class="stuffbox">
 <h3>{% trans "Slug" %}</h3>
 <div class="inside">
-	<input type="text" value="{{entry.slug}}" tabindex="1" size="30" name="slug"/><br/>
+	<input type="text" id="slug" value="{{entry.slug}}" tabindex="1" size="30" name="slug"/><br/>
 </div>
 </div>
 {%ifequal entrytype "post"%}
