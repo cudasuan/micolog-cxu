@@ -87,11 +87,11 @@ class entriesByCategory(BasePublicPage):
         except:
             page_index=1
         slug=urllib.unquote(slug).decode('utf8')
-        cats=Category.all().filter('slug =',slug).fetch(1)
-        if cats:
-            entries=Entry.all().filter('categorie_keys =',cats[0].key()).order("-date")
+        cat=Category.all().filter('slug =',slug).get()
+        if cat:
+            entries=Entry.all().filter('categorie_keys =',cat.key()).filter('published =',True).order("-date")
             entries,links=Pager(query=entries).fetch(page_index)
-            self.render('category',{'entries':entries,'category':cats[0],'pager':links})
+            self.render('category',{'entries':entries,'category':cat,'pager':links})
         else:
             self.error(414,slug)
 
@@ -108,7 +108,7 @@ class entriesByTag(BasePublicPage):
         import urllib
         slug=urldecode(slug)
 
-        entries=Entry.all().filter('tags =',slug).order("-date")
+        entries=Entry.all().filter('tags =',slug).filter('published =',True).order("-date")
         entries,links=Pager(query=entries).fetch(page_index)
         self.render('tag',{'entries':entries,'tag':slug,'pager':links})
 
@@ -164,6 +164,10 @@ class SinglePost(BasePublicPage):
 
 class FeedHandler(BaseRequestHandler):
     def get(self,tags=None):
+        user_agent = self.request.headers['user-agent']
+        if 'FeedBurner' not in user_agent:
+            self.redirect('http://feedproxy.google.com/ProgrammingNotes')
+            return
         self.response.headers['Content-Type'] = 'application/atom+xml'
         self.doget(tags)
 

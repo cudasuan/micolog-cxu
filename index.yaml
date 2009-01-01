@@ -39,6 +39,7 @@ indexes:
 - kind: Entry
   properties:
   - name: categorie_keys
+  - name: published
   - name: date
     direction: desc
 
@@ -129,6 +130,7 @@ indexes:
 - kind: Entry
   properties:
   - name: tags
+  - name: published
   - name: date
     direction: desc
 
